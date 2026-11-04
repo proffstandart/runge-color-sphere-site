@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цветовой шар Рунге — подбор цвета и цветовые гармонии на Android</title>
+<meta name="description" content="Цветовой шар Рунге — бесплатное приложение для подбора цвета, построения цветовых гармоний и палитр по модели Филиппа Отто Рунге «Farben-Kugel» (1810). Цветовой круг-шар, разрезы, пипетка с фото, смешивание красок, пропорции, экспорт CSS/JSON. Без рекламы, офлайн, 6 языков.">
+<meta name="keywords" content="цветовой шар Рунге, цветовой круг, подбор цвета, цветовая гармония, палитра, сочетание цветов, теория цвета, пипетка с фото, цветоведение, гармония цветов, триада, комплементарные цвета">
+<meta property="og:title" content="Цветовой шар Рунге — подбор цвета и цветовые гармонии">
+<meta property="og:description" content="Интерактивный трёхмерный цветовой круг 1810 года: гармонии, палитры, пипетка с фото, смешивание красок и рабочие пропорции. Бесплатно, без рекламы, офлайн.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/shot-sphere.png">
+<link rel="icon" type="image/png" href="img/icon-512.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Цветовой шар Рунге",
+  "alternateName": "Runge Color Sphere",
+  "operatingSystem": "Android 7.0+",
+  "applicationCategory": "DesignApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" },
+  "description": "Подбор цвета и построение цветовых гармоний по модели Филиппа Отто Рунге «Farben-Kugel» (1810) — первого трёхмерного цветового круга. Гармонии, палитры по фото, смешивание красок, рабочие пропорции, экспорт CSS/JSON. Без рекламы, работает офлайн.",
+  "inLanguage": ["ru", "en", "de", "fr", "es", "zh"]
+}
+</script>
+<style>
+  :root {
+    --bg: #0b0b0f;
+    --card: #141419;
+    --line: rgba(255,255,255,0.1);
+    --text: #ece9e2;
+    --dim: #9b98a2;
+    --accent: #d63d4e;
+    --accent2: #2d9e5b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+  header.hero {
+    display: flex; gap: 28px; align-items: center;
+    padding: 56px 0 32px; flex-wrap: wrap;
+  }
+  .icon { width: 128px; height: 128px; border-radius: 26px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+  h1 { font-size: 2.1rem; line-height: 1.2; margin-bottom: 10px; }
+  .lead { color: var(--dim); font-size: 1.05rem; max-width: 620px; }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .badge {
+    font-family: system-ui, sans-serif; font-size: 0.78rem;
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 12px; color: var(--dim);
+  }
+  .cta {
+    display: inline-block; margin-top: 22px;
+    font-family: system-ui, sans-serif; font-weight: 600;
+    background: var(--accent); color: #fff; text-decoration: none;
+    padding: 14px 30px; border-radius: 12px; font-size: 1.05rem;
+  }
+  .cta.secondary { background: transparent; border: 1px solid var(--line); color: var(--text); margin-left: 10px; }
+  .cta:hover { filter: brightness(1.12); }
+  section { padding: 36px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 1.5rem; margin-bottom: 18px; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .shots img {
+    width: 100%; border-radius: 14px; border: 1px solid var(--line);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+  }
+  .shots figcaption {
+    font-family: system-ui, sans-serif; font-size: 0.8rem;
+    color: var(--dim); margin-top: 8px; text-align: center;
+  }
+  ul.features { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px; }
+  ul.features li { padding-left: 24px; position: relative; }
+  ul.features li::before { content: '●'; position: absolute; left: 0; color: var(--accent2); font-size: 0.7rem; top: 6px; }
+  .note {
+    font-family: system-ui, sans-serif; font-size: 0.95rem; color: var(--dim);
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 20px;
+  }
+  .en { font-size: 0.95rem; color: var(--dim); }
+  .en h2 { color: var(--text); }
+  footer {
+    border-top: 1px solid var(--line); padding: 28px 0 44px;
+    font-family: system-ui, sans-serif; font-size: 0.85rem; color: var(--dim);
+  }
+  footer a { color: var(--text); }
+  @media (max-width: 640px) {
+    header.hero { padding-top: 36px; }
+    ul.features { grid-template-columns: 1fr; }
+    .cta.secondary { margin-left: 0; margin-top: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <img class="icon" src="img/icon-512.png" alt="Иконка приложения Цветовой шар Рунге">
+  <div>
+    <h1>Цветовой шар Рунге</h1>
+    <p class="lead">Подбор цвета и построение цветовых гармоний по модели
+    Филиппа Отто Рунге «Farben-Kugel» (1810) — первого в истории трёхмерного
+    цветового круга. Точный цветовой круг-шар, экваториальные и полярные разрезы,
+    пипетка с фото и инструменты художника.</p>
+    <div class="badges">
+      <span class="badge">бесплатно</span>
+      <span class="badge">без рекламы</span>
+      <span class="badge">работает офлайн</span>
+      <span class="badge">Android 7.0+</span>
+      <span class="badge">6 языков</span>
+    </div>
+    <div>
+      <a class="cta" href="https://apps.rustore.ru/app/com.rungesphere.app">Скачать в RuStore</a>
+      <a class="cta secondary" href="https://github.com/proffstandart/runge-color-sphere">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <h2>Как это выглядит</h2>
+  <div class="shots">
+    <figure>
+      <img src="img/shot-sphere.png" alt="Интерактивный трёхмерный цветовой шар Рунге с 12 цветами на экваторе" loading="lazy">
+      <figcaption>Цветовой шар с вращением</figcaption>
+    </figure>
+    <figure>
+      <img src="img/shot-harmonies.png" alt="Цветовые гармонии: триада, антипод, аналоговые цвета по законам шара" loading="lazy">
+      <figcaption>Гармонии по законам шара</figcaption>
+    </figure>
+    <figure>
+      <img src="img/shot-proportions.png" alt="Свои рабочие пропорции пары и триады: пресеты 70/30, ползунки долей" loading="lazy">
+      <figcaption>Свои рабочие пропорции</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <h2>Возможности</h2>
+  <ul class="features">
+    <li>Интерактивный трёхмерный цветовой круг (шар) с вращением — клик в любую точку берёт цвет</li>
+    <li>Разрезы шара: экваториальное и полярное сечения, как на гравюрах 1810 года</li>
+    <li>Цветовые гармонии: антипод (живой контраст), триада 120°, меридиан света и тени, ступени к серой оси, аналоговые цвета</li>
+    <li>Режимы 1, 2 и 3 цветов: двойной контраст, сплит-комплементарность, анализ баланса треугольника с автокоррекцией</li>
+    <li>Пипетка с фото и сбор палитры по фотографии с определением цветовой схемы</li>
+    <li>Свои рабочие пропорции пары и триады: пресеты 70/30 и 60/30/10, подбор долей по хроме</li>
+    <li>Инструменты: смешивание красок с оценкой точности (ΔE), ограниченная палитра 3–6 цветов, палитра под светом, градиенты по шару</li>
+    <li>Проверка контраста текста по WCAG</li>
+    <li>Сохранение палитр, экспорт в CSS, JSON, ASE, GPL, SVG и отправка картинкой в мессенджеры</li>
+    <li>Интерфейс на русском, английском, немецком, французском, испанском и китайском</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Для кого</h2>
+  <p class="note">Дизайнеры, художники, иллюстраторы, декораторы, визажисты, флористы,
+  преподаватели рисования и все, кто изучает цветоведение и теорию цвета.
+  Пригодится при подборе сочетания цветов для интерьера, одежды, макета сайта,
+  логотипа или открытки. Приложение не собирает данные и не требует интернета —
+  весь расчёт гармоний происходит на устройстве.</p>
+</section>
+
+<section class="en" lang="en">
+  <h2>Runge Color Sphere</h2>
+  <p>A free Android app for color picking and building color harmonies on Philipp Otto
+  Runge's «Farben-Kugel» (1810) — the first 3D color wheel in history. Interactive sphere,
+  1810-style cross-sections, harmonies (antipode, 120° triad, light/shadow meridian),
+  photo color picker, paint mixing with ΔE accuracy, custom pair/triad proportions,
+  WCAG contrast check, CSS/JSON/ASE/GPL/SVG export. No ads, fully offline,
+  in Russian, English, German, French, Spanish and Chinese.</p>
+</section>
+
+<footer>
+  <div class="wrap" style="padding:0">
+    <p>Приложение: <a href="https://apps.rustore.ru/app/com.rungesphere.app">Цветовой шар Рунге в RuStore</a> ·
+    <a href="https://github.com/proffstandart/runge-color-sphere">исходный код на GitHub</a> ·
+    <a href="https://proffstandart.github.io/privacy/">политика конфиденциальности</a></p>
+    <p>Runge Color Sphere © 2026</p>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
