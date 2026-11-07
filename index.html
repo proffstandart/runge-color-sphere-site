@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Цветовой шар Рунге — подбор цвета и цветовые гармонии на Android</title>
 <meta name="description" content="Цветовой шар Рунге — бесплатное приложение для подбора цвета, построения цветовых гармоний и палитр по модели Филиппа Отто Рунге «Farben-Kugel» (1810). Цветовой круг-шар, разрезы, пипетка с фото, смешивание красок, пропорции, экспорт CSS/JSON. Без рекламы, офлайн, 6 языков.">
-<meta name="keywords" content="цветовой шар Рунге, цветовой круг, подбор цвета, цветовая гармония, палитра, сочетание цветов, теория цвета, пипетка с фото, цветоведение, гармония цветов, триада, комплементарные цвета">
+<meta name="keywords" content="цветовой шар Рунге, цветовой круг, подбор цвета, цветовая гармония, палитра, сочетание цветов, теория цвета, пипетка с фото, цветоведение, гармония цветов, триада, комплементарные цвета, Runge color sphere, Farben-Kugel, color wheel, color harmony, palette">
 <meta property="og:title" content="Цветовой шар Рунге — подбор цвета и цветовые гармонии">
 <meta property="og:description" content="Интерактивный трёхмерный цветовой круг 1810 года: гармонии, палитры, пипетка с фото, смешивание красок и рабочие пропорции. Бесплатно, без рекламы, офлайн.">
 <meta property="og:type" content="website">
@@ -42,9 +42,23 @@
     line-height: 1.6;
   }
   .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+  .langtabs {
+    display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end;
+    padding-top: 18px;
+    font-family: system-ui, sans-serif;
+  }
+  .langtabs button {
+    background: transparent; border: 1px solid var(--line); color: var(--dim);
+    border-radius: 999px; padding: 4px 14px; font-size: 0.82rem; cursor: pointer;
+  }
+  .langtabs button.active {
+    background: #fff; color: #000; border-color: #fff; font-weight: 600;
+  }
+  .langtabs button:hover { color: var(--text); border-color: var(--text); }
+  .langtabs button.active:hover { color: #000; }
   header.hero {
     display: flex; gap: 28px; align-items: center;
-    padding: 56px 0 32px; flex-wrap: wrap;
+    padding: 36px 0 32px; flex-wrap: wrap;
   }
   .icon { width: 128px; height: 128px; border-radius: 26px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
   h1 { font-size: 2.1rem; line-height: 1.2; margin-bottom: 10px; }
@@ -65,6 +79,7 @@
   .cta:hover { filter: brightness(1.12); }
   section { padding: 36px 0; border-top: 1px solid var(--line); }
   h2 { font-size: 1.5rem; margin-bottom: 18px; }
+  h3.sub { font-size: 1.15rem; margin: 18px 0 8px; }
   .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
   .shots img {
     width: 100%; border-radius: 14px; border: 1px solid var(--line);
@@ -75,6 +90,7 @@
     color: var(--dim); margin-top: 8px; text-align: center;
   }
   ul.features { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px; }
+  ul.features.one { grid-template-columns: 1fr; }
   ul.features li { padding-left: 24px; position: relative; }
   ul.features li::before { content: '●'; position: absolute; left: 0; color: var(--accent2); font-size: 0.7rem; top: 6px; }
   .note {
@@ -82,15 +98,14 @@
     background: var(--card); border: 1px solid var(--line); border-radius: 12px;
     padding: 16px 20px;
   }
-  .en { font-size: 0.95rem; color: var(--dim); }
-  .en h2 { color: var(--text); }
+  .note b { color: var(--text); }
   footer {
     border-top: 1px solid var(--line); padding: 28px 0 44px;
     font-family: system-ui, sans-serif; font-size: 0.85rem; color: var(--dim);
   }
   footer a { color: var(--text); }
   @media (max-width: 640px) {
-    header.hero { padding-top: 36px; }
+    header.hero { padding-top: 24px; }
     ul.features { grid-template-columns: 1fr; }
     .cta.secondary { margin-left: 0; margin-top: 10px; }
   }
@@ -99,127 +114,346 @@
 <body>
 <div class="wrap">
 
+<nav class="langtabs" id="langtabs" aria-label="Language / Язык">
+  <button data-lang="ru" class="active">Русский</button>
+  <button data-lang="en">English</button>
+  <button data-lang="de">Deutsch</button>
+  <button data-lang="fr">Français</button>
+  <button data-lang="zh">中文</button>
+  <button data-lang="es">Español</button>
+</nav>
+
 <header class="hero">
-  <img class="icon" src="img/icon-512.png" alt="Иконка приложения Цветовой шар Рунге">
+  <img class="icon" src="img/icon-512.png" alt="" width="128" height="128">
   <div>
-    <h1>Цветовой шар Рунге</h1>
-    <p class="lead">Подбор цвета и построение цветовых гармоний по модели
+    <h1 data-i18n="h1">Цветовой шар Рунге</h1>
+    <p class="lead" data-i18n="lead">Подбор цвета и построение цветовых гармоний по модели
     Филиппа Отто Рунге «Farben-Kugel» (1810) — первого в истории трёхмерного
     цветового круга. Точный цветовой круг-шар, экваториальные и полярные разрезы,
     пипетка с фото и инструменты художника.</p>
     <div class="badges">
-      <span class="badge">бесплатно</span>
-      <span class="badge">без рекламы</span>
-      <span class="badge">работает офлайн</span>
+      <span class="badge" data-i18n="b1">бесплатно</span>
+      <span class="badge" data-i18n="b2">без рекламы</span>
+      <span class="badge" data-i18n="b3">работает офлайн</span>
       <span class="badge">Android 7.0+</span>
-      <span class="badge">6 языков</span>
+      <span class="badge" data-i18n="b5">6 языков</span>
     </div>
     <div>
-      <a class="cta" href="https://apps.rustore.ru/app/com.rungesphere.app">Скачать в RuStore</a>
-      <a class="cta secondary" href="https://github.com/proffstandart/runge-color-sphere">GitHub</a>
+      <a class="cta" href="https://apps.rustore.ru/app/com.rungesphere.app" data-i18n="cta1">Скачать в RuStore</a>
+      <a class="cta secondary" href="https://github.com/proffstandart/runge-color-sphere" data-i18n="cta2">Исходный код на GitHub</a>
     </div>
   </div>
 </header>
 
 <section>
-  <h2>Как это выглядит</h2>
+  <h2 data-i18n="sh1">Как это выглядит</h2>
   <div class="shots">
     <figure>
-      <img src="img/shot-sphere.png" alt="Интерактивный трёхмерный цветовой шар Рунге с 12 цветами на экваторе" loading="lazy">
-      <figcaption>Цветовой шар с вращением</figcaption>
+      <img src="img/shot-sphere.png" alt="" loading="lazy">
+      <figcaption data-i18n="cap1">Цветовой шар с вращением</figcaption>
     </figure>
     <figure>
-      <img src="img/shot-harmonies.png" alt="Цветовые гармонии: триада, антипод, аналоговые цвета по законам шара" loading="lazy">
-      <figcaption>Гармонии по законам шара</figcaption>
+      <img src="img/shot-harmonies.png" alt="" loading="lazy">
+      <figcaption data-i18n="cap2">Гармонии по законам шара</figcaption>
     </figure>
     <figure>
-      <img src="img/shot-proportions.png" alt="Свои рабочие пропорции пары и триады: пресеты 70/30, ползунки долей" loading="lazy">
-      <figcaption>Свои рабочие пропорции</figcaption>
+      <img src="img/shot-proportions.png" alt="" loading="lazy">
+      <figcaption data-i18n="cap3">Свои рабочие пропорции</figcaption>
     </figure>
   </div>
 </section>
 
 <section>
-  <h2>Возможности</h2>
+  <h2 data-i18n="sh2">Возможности</h2>
   <ul class="features">
-    <li>Интерактивный трёхмерный цветовой круг (шар) с вращением — клик в любую точку берёт цвет</li>
-    <li>Разрезы шара: экваториальное и полярное сечения, как на гравюрах 1810 года</li>
-    <li>Цветовые гармонии: антипод (живой контраст), триада 120°, меридиан света и тени, ступени к серой оси, аналоговые цвета</li>
-    <li>Режимы 1, 2 и 3 цветов: двойной контраст, сплит-комплементарность, анализ баланса треугольника с автокоррекцией</li>
-    <li>Пипетка с фото и сбор палитры по фотографии с определением цветовой схемы</li>
-    <li>Свои рабочие пропорции пары и триады: пресеты 70/30 и 60/30/10, подбор долей по хроме</li>
-    <li>Инструменты: смешивание красок с оценкой точности (ΔE), ограниченная палитра 3–6 цветов, палитра под светом, градиенты по шару</li>
-    <li>Проверка контраста текста по WCAG</li>
-    <li>Сохранение палитр, экспорт в CSS, JSON, ASE, GPL, SVG и отправка картинкой в мессенджеры</li>
-    <li>Интерфейс на русском, английском, немецком, французском, испанском и китайском</li>
+    <li data-i18n="f1">Интерактивный трёхмерный цветовой круг (шар) с вращением — клик в любую точку берёт цвет</li>
+    <li data-i18n="f2">Разрезы шара: экваториальное и полярное сечения, как на гравюрах 1810 года</li>
+    <li data-i18n="f3">Цветовые гармонии: антипод (живой контраст), триада 120°, меридиан света и тени, ступени к серой оси, аналоговые цвета</li>
+    <li data-i18n="f4">Режимы 1, 2 и 3 цветов: двойной контраст, сплит-комплементарность, анализ баланса треугольника с автокоррекцией</li>
+    <li data-i18n="f5">Пипетка с фото и сбор палитры по фотографии с определением цветовой схемы</li>
+    <li data-i18n="f6">Свои рабочие пропорции пары и триады: пресеты 70/30 и 60/30/10, подбор долей по хроме</li>
+    <li data-i18n="f7">Инструменты: смешивание красок с оценкой точности (ΔE), ограниченная палитра 3–6 цветов, палитра под светом, градиенты по шару</li>
+    <li data-i18n="f8">Проверка контраста текста по WCAG</li>
+    <li data-i18n="f9">Сохранение палитр, экспорт в CSS, JSON, ASE, GPL, SVG и отправка картинкой в мессенджеры</li>
+    <li data-i18n="f10">Интерфейс на русском, английском, немецком, французском, испанском и китайском</li>
   </ul>
 </section>
 
 <section>
-  <h2>Подробнее об инструментах</h2>
+  <h2 data-i18n="sh3">Подробнее об инструментах</h2>
 
-  <h3 style="font-size:1.15rem; margin:18px 0 8px">1. Анализ баланса треугольника и автоматическая коррекция</h3>
-  <p class="note" style="margin-bottom:10px">Эта функция опирается на учение о смешении цветов Филиппа Отто Рунге.
-  Гармоничными считаются те цвета, которые при смешивании в равных долях дают нейтральный
-  серый — то есть полностью уравновешивают друг друга.</p>
-  <ul class="features" style="grid-template-columns:1fr">
-    <li><b>Как это работает.</b> Когда вы выбираете два или три цвета, приложение строит
-    треугольник внутри шара Рунге и рассчитывает его геометрический центр относительно
-    центральной серой оси сферы — быстро, прямо на устройстве.</li>
-    <li><b>Оценка гармонии.</b> Если центр тяжести совпадает с серой осью — цвета
-    сбалансированы. Если треугольник «перекашивается» к яркому оттенку, приложение
-    показывает, что гармония нарушена: при смешении получится грязный или смещённый тон.</li>
-    <li><b>Автоматическая коррекция.</b> Приложение не просто критикует выбор, а предлагает
-    исправленный вариант: сдвигает координаты цветов по сфере (светлоту и насыщенность),
-    чтобы они встали в равновесие. Пригодится для интерьеров и айдентики, где цвета
-    не должны перебивать друг друга.</li>
+  <h3 class="sub" data-i18n="t1h">1. Анализ баланса треугольника и автоматическая коррекция</h3>
+  <p class="note" style="margin-bottom:10px" data-i18n="t1p">Эта функция опирается на учение
+  о смешении цветов Филиппа Отто Рунге. Гармоничными считаются те цвета, которые при
+  смешивании в равных долях дают нейтральный серый — то есть полностью уравновешивают
+  друг друга.</p>
+  <ul class="features one">
+    <li data-i18n="t1a"><b>Как это работает.</b> Когда вы выбираете два или три цвета, приложение строит треугольник внутри шара Рунге и рассчитывает его геометрический центр относительно центральной серой оси сферы — быстро, прямо на устройстве.</li>
+    <li data-i18n="t1b"><b>Оценка гармонии.</b> Если центр тяжести совпадает с серой осью — цвета сбалансированы. Если треугольник «перекашивается» к яркому оттенку, приложение показывает, что гармония нарушена: при смешении получится грязный или смещённый тон.</li>
+    <li data-i18n="t1c"><b>Автоматическая коррекция.</b> Приложение не просто критикует выбор, а предлагает исправленный вариант: сдвигает координаты цветов по сфере (светлоту и насыщенность), чтобы они встали в равновесие. Пригодится для интерьеров и айдентики, где цвета не должны перебивать друг друга.</li>
   </ul>
 
-  <h3 style="font-size:1.15rem; margin:24px 0 8px">2. Экспорт палитр в графические редакторы и код</h3>
-  <p class="note" style="margin-bottom:10px">Подобранную гамму можно в один клик перенести
-  в рабочие программы. Поддерживается пять форматов:</p>
-  <ul class="features" style="grid-template-columns:1fr">
-    <li><b>.ASE (Adobe Swatch Exchange)</b> — импортируется напрямую в Photoshop,
-    Illustrator и InDesign через панель «Образцы» (Swatches).</li>
-    <li><b>.GPL (GIMP Palette)</b> — открывается в GIMP и Krita.</li>
-    <li><b>.SVG</b> — векторные цветные плашки; файл перетаскивается в Figma, Inkscape
-    или CorelDRAW, цвета копируются пипеткой прямо в проекте.</li>
-    <li><b>.CSS и .JSON</b> — готовые переменные с HEX-кодами для вёрстки сайта
-    или мобильного приложения.</li>
-    <li><b>Картинка для мессенджеров.</b> Если переносить палитру в редакторы не нужно,
-    кнопка «Поделиться» сгенерирует карточку со всеми цветами и HEX-кодами —
-    удобно отправить клиенту в Telegram или WhatsApp.</li>
+  <h3 class="sub" data-i18n="t2h">2. Экспорт палитр в графические редакторы и код</h3>
+  <p class="note" style="margin-bottom:10px" data-i18n="t2p">Подобранную гамму можно в один
+  клик перенести в рабочие программы. Поддерживается пять форматов:</p>
+  <ul class="features one">
+    <li data-i18n="t2a"><b>.ASE (Adobe Swatch Exchange)</b> — импортируется напрямую в Photoshop, Illustrator и InDesign через панель «Образцы» (Swatches).</li>
+    <li data-i18n="t2b"><b>.GPL (GIMP Palette)</b> — открывается в GIMP и Krita.</li>
+    <li data-i18n="t2c"><b>.SVG</b> — векторные цветные плашки; файл перетаскивается в Figma, Inkscape или CorelDRAW, цвета копируются пипеткой прямо в проекте.</li>
+    <li data-i18n="t2d"><b>.CSS и .JSON</b> — готовые переменные с HEX-кодами для вёрстки сайта или мобильного приложения.</li>
+    <li data-i18n="t2e"><b>Картинка для мессенджеров.</b> Если переносить палитру в редакторы не нужно, кнопка «Поделиться» сгенерирует карточку со всеми цветами и HEX-кодами — удобно отправить клиенту в Telegram или WhatsApp.</li>
   </ul>
 </section>
 
 <section>
-  <h2>Для кого</h2>
-  <p class="note">Дизайнеры, художники, иллюстраторы, декораторы, визажисты, флористы,
+  <h2 data-i18n="sh4">Для кого</h2>
+  <p class="note" data-i18n="who">Дизайнеры, художники, иллюстраторы, декораторы, визажисты, флористы,
   преподаватели рисования и все, кто изучает цветоведение и теорию цвета.
   Пригодится при подборе сочетания цветов для интерьера, одежды, макета сайта,
   логотипа или открытки. Приложение не собирает данные и не требует интернета —
   весь расчёт гармоний происходит на устройстве.</p>
 </section>
 
-<section class="en" lang="en">
-  <h2>Runge Color Sphere</h2>
-  <p>A free Android app for color picking and building color harmonies on Philipp Otto
-  Runge's «Farben-Kugel» (1810) — the first 3D color wheel in history. Interactive sphere,
-  1810-style cross-sections, harmonies (antipode, 120° triad, light/shadow meridian),
-  photo color picker, paint mixing with ΔE accuracy, custom pair/triad proportions,
-  WCAG contrast check, CSS/JSON/ASE/GPL/SVG export. No ads, fully offline,
-  in Russian, English, German, French, Spanish and Chinese.</p>
-</section>
-
 <footer>
   <div class="wrap" style="padding:0">
-    <p>Приложение: <a href="https://apps.rustore.ru/app/com.rungesphere.app">Цветовой шар Рунге в RuStore</a> ·
-    <a href="https://github.com/proffstandart/runge-color-sphere">исходный код на GitHub</a> ·
-    <a href="https://proffstandart.github.io/privacy/">политика конфиденциальности</a></p>
-    <p>Runge Color Sphere © 2026</p>
+    <p><span data-i18n="ft1">Приложение:</span> <a href="https://apps.rustore.ru/app/com.rungesphere.app">RuStore</a> ·
+    <a href="https://github.com/proffstandart/runge-color-sphere" data-i18n="ft2">исходный код на GitHub</a> ·
+    <a href="https://proffstandart.github.io/privacy/" data-i18n="ft3">политика конфиденциальности</a></p>
+    <p>© 2026 Proffstandart</p>
   </div>
 </footer>
 
 </div>
+
+<script>
+const I18N = {
+ru: {
+  'h1': 'Цветовой шар Рунге',
+  'lead': 'Подбор цвета и построение цветовых гармоний по модели Филиппа Отто Рунге «Farben-Kugel» (1810) — первого в истории трёхмерного цветового круга. Точный цветовой круг-шар, экваториальные и полярные разрезы, пипетка с фото и инструменты художника.',
+  'b1': 'бесплатно', 'b2': 'без рекламы', 'b3': 'работает офлайн', 'b5': '6 языков',
+  'cta1': 'Скачать в RuStore', 'cta2': 'Исходный код на GitHub',
+  'sh1': 'Как это выглядит', 'cap1': 'Цветовой шар с вращением', 'cap2': 'Гармонии по законам шара', 'cap3': 'Свои рабочие пропорции',
+  'sh2': 'Возможности',
+  'f1': 'Интерактивный трёхмерный цветовой круг (шар) с вращением — клик в любую точку берёт цвет',
+  'f2': 'Разрезы шара: экваториальное и полярное сечения, как на гравюрах 1810 года',
+  'f3': 'Цветовые гармонии: антипод (живой контраст), триада 120°, меридиан света и тени, ступени к серой оси, аналоговые цвета',
+  'f4': 'Режимы 1, 2 и 3 цветов: двойной контраст, сплит-комплементарность, анализ баланса треугольника с автокоррекцией',
+  'f5': 'Пипетка с фото и сбор палитры по фотографии с определением цветовой схемы',
+  'f6': 'Свои рабочие пропорции пары и триады: пресеты 70/30 и 60/30/10, подбор долей по хроме',
+  'f7': 'Инструменты: смешивание красок с оценкой точности (ΔE), ограниченная палитра 3–6 цветов, палитра под светом, градиенты по шару',
+  'f8': 'Проверка контраста текста по WCAG',
+  'f9': 'Сохранение палитр, экспорт в CSS, JSON, ASE, GPL, SVG и отправка картинкой в мессенджеры',
+  'f10': 'Интерфейс на русском, английском, немецком, французском, испанском и китайском',
+  'sh3': 'Подробнее об инструментах',
+  't1h': '1. Анализ баланса треугольника и автоматическая коррекция',
+  't1p': 'Эта функция опирается на учение о смешении цветов Филиппа Отто Рунге. Гармоничными считаются те цвета, которые при смешивании в равных долях дают нейтральный серый — то есть полностью уравновешивают друг друга.',
+  't1a': '<b>Как это работает.</b> Когда вы выбираете два или три цвета, приложение строит треугольник внутри шара Рунге и рассчитывает его геометрический центр относительно центральной серой оси сферы — быстро, прямо на устройстве.',
+  't1b': '<b>Оценка гармонии.</b> Если центр тяжести совпадает с серой осью — цвета сбалансированы. Если треугольник «перекашивается» к яркому оттенку, приложение показывает, что гармония нарушена: при смешении получится грязный или смещённый тон.',
+  't1c': '<b>Автоматическая коррекция.</b> Приложение не просто критикует выбор, а предлагает исправленный вариант: сдвигает координаты цветов по сфере (светлоту и насыщенность), чтобы они встали в равновесие. Пригодится для интерьеров и айдентики, где цвета не должны перебивать друг друга.',
+  't2h': '2. Экспорт палитр в графические редакторы и код',
+  't2p': 'Подобранную гамму можно в один клик перенести в рабочие программы. Поддерживается пять форматов:',
+  't2a': '<b>.ASE (Adobe Swatch Exchange)</b> — импортируется напрямую в Photoshop, Illustrator и InDesign через панель «Образцы» (Swatches).',
+  't2b': '<b>.GPL (GIMP Palette)</b> — открывается в GIMP и Krita.',
+  't2c': '<b>.SVG</b> — векторные цветные плашки; файл перетаскивается в Figma, Inkscape или CorelDRAW, цвета копируются пипеткой прямо в проекте.',
+  't2d': '<b>.CSS и .JSON</b> — готовые переменные с HEX-кодами для вёрстки сайта или мобильного приложения.',
+  't2e': '<b>Картинка для мессенджеров.</b> Если переносить палитру в редакторы не нужно, кнопка «Поделиться» сгенерирует карточку со всеми цветами и HEX-кодами — удобно отправить клиенту в Telegram или WhatsApp.',
+  'sh4': 'Для кого',
+  'who': 'Дизайнеры, художники, иллюстраторы, декораторы, визажисты, флористы, преподаватели рисования и все, кто изучает цветоведение и теорию цвета. Пригодится при подборе сочетания цветов для интерьера, одежды, макета сайта, логотипа или открытки. Приложение не собирает данные и не требует интернета — весь расчёт гармоний происходит на устройстве.',
+  'ft1': 'Приложение:', 'ft2': 'исходный код на GitHub', 'ft3': 'политика конфиденциальности'
+},
+en: {
+  'h1': 'Runge Color Sphere',
+  'lead': 'Color picking and harmony building on Philipp Otto Runge\u2019s \u201cFarben-Kugel\u201d model (1810) — the first three-dimensional color wheel in history. An accurate color sphere, equatorial and polar cross-sections, a photo color picker and artist tools.',
+  'b1': 'free', 'b2': 'no ads', 'b3': 'works offline', 'b5': '6 languages',
+  'cta1': 'Get it on RuStore', 'cta2': 'Source code on GitHub',
+  'sh1': 'Screenshots', 'cap1': 'Interactive color sphere', 'cap2': 'Harmonies by the laws of the sphere', 'cap3': 'Custom working proportions',
+  'sh2': 'Features',
+  'f1': 'Interactive 3D color wheel (sphere) with rotation — click anywhere to pick a color',
+  'f2': 'Sphere cross-sections: equatorial and polar, as in the 1810 engravings',
+  'f3': 'Color harmonies: antipode (living contrast), 120° triad, meridian of light and shadow, steps to the grey axis, analogous colors',
+  'f4': '1, 2 and 3 color modes: double contrast, split complementarity, triangle balance analysis with auto-correction',
+  'f5': 'Photo color picker and palette building from a photo with scheme detection',
+  'f6': 'Custom working proportions for pairs and triads: 70/30 and 60/30/10 presets, shares by chroma',
+  'f7': 'Tools: paint mixing with accuracy score (ΔE), limited palette of 3–6 colors, palette under light, sphere gradients',
+  'f8': 'WCAG text contrast check',
+  'f9': 'Save palettes, export CSS, JSON, ASE, GPL, SVG and share as an image',
+  'f10': 'Interface in Russian, English, German, French, Spanish and Chinese',
+  'sh3': 'About the tools',
+  't1h': '1. Triangle balance analysis and automatic correction',
+  't1p': 'This feature builds on Philipp Otto Runge\u2019s teaching of color mixing: colors are harmonious when mixed in equal shares they give a neutral grey — a complete balance of one another.',
+  't1a': '<b>How it works.</b> When you pick two or three colors, the app builds a triangle inside Runge\u2019s sphere and computes its geometric centre relative to the central grey axis — fast, right on your device.',
+  't1b': '<b>Harmony score.</b> If the centre of gravity meets the grey axis, the colors are balanced. If the triangle tips towards a bright hue, the app shows the harmony is broken: the mix will turn dirty or shifted.',
+  't1c': '<b>Automatic correction.</b> Instead of just criticizing, the app offers a corrected set, shifting the colors over the sphere (lightness and saturation) into equilibrium. Handy for interiors and identity work, where colors should not fight each other.',
+  't2h': '2. Export palettes to graphics software and code',
+  't2p': 'A finished palette moves to your working tools in one tap. Five formats are supported:',
+  't2a': '<b>.ASE (Adobe Swatch Exchange)</b> — imports directly into Photoshop, Illustrator and InDesign via the Swatches panel.',
+  't2b': '<b>.GPL (GIMP Palette)</b> — opens in GIMP and Krita.',
+  't2c': '<b>.SVG</b> — vector color chips; drag the file into Figma, Inkscape or CorelDRAW and copy colors with the eyedropper right in the project.',
+  't2d': '<b>.CSS and .JSON</b> — ready variables with HEX codes for websites and mobile apps.',
+  't2e': '<b>Image for messengers.</b> No editor transfer needed? The Share button generates a card with all colors and HEX codes — easy to send to a client in Telegram or WhatsApp.',
+  'sh4': 'Who it\u2019s for',
+  'who': 'Designers, artists, illustrators, decorators, makeup artists, florists, art teachers and everyone studying color theory. Useful for choosing color schemes for interiors, outfits, website layouts, logos or cards. The app collects no data and needs no internet — all harmony computation happens on the device.',
+  'ft1': 'App:', 'ft2': 'source code on GitHub', 'ft3': 'privacy policy'
+},
+de: {
+  'h1': 'Runge-Farbkugel',
+  'lead': 'Farbwahl und Farbharmonien nach dem Modell «Farben-Kugel» von Philipp Otto Runge (1810) — dem ersten dreidimensionalen Farbkreis der Geschichte. Präzise Farbkugel, Äquator- und Polschnitte, Foto-Pipette und Werkzeuge für Künstler.',
+  'b1': 'kostenlos', 'b2': 'werbefrei', 'b3': 'funktioniert offline', 'b5': '6 Sprachen',
+  'cta1': 'Bei RuStore laden', 'cta2': 'Quellcode auf GitHub',
+  'sh1': 'So sieht es aus', 'cap1': 'Farbkugel mit Drehung', 'cap2': 'Harmonien nach den Gesetzen der Kugel', 'cap3': 'Eigene Arbeitsanteile',
+  'sh2': 'Funktionen',
+  'f1': 'Interaktiver 3D-Farbkreis (Kugel) mit Drehung — Klick in einen beliebigen Punkt wählt die Farbe',
+  'f2': 'Kugelschnitte: Äquator- und Polschnitt wie auf den Kupfertafeln von 1810',
+  'f3': 'Farbharmonien: Antipode (Lebendkontrast), 120°-Triade, Meridian aus Licht und Schatten, Sättigungsstufen zur grauen Achse, analoge Farben',
+  'f4': 'Modi für 1, 2 und 3 Farben: Doppelkontrast, split-komplementär, Dreiecksbilanz mit automatischer Korrektur',
+  'f5': 'Foto-Pipette und Palette aus einem Foto mit Schemaerkennung',
+  'f6': 'Eigene Arbeitsanteile für Paare und Triaden: Voreinstellungen 70/30 und 60/30/10, Anteile nach Chrominanz',
+  'f7': 'Werkzeuge: Farbmischung mit Genauigkeitswert (ΔE), eingeschränkte Palette mit 3–6 Farben, Palette unter Licht, Kugel-Verläufe',
+  'f8': 'WCAG-Kontrastprüfung für Text',
+  'f9': 'Paletten speichern, Export nach CSS, JSON, ASE, GPL, SVG und Teilen als Bild',
+  'f10': 'Oberfläche auf Russisch, Englisch, Deutsch, Französisch, Spanisch und Chinesisch',
+  'sh3': 'Mehr über die Werkzeuge',
+  't1h': '1. Dreiecksbilanz und automatische Korrektur',
+  't1p': 'Diese Funktion folgt Philipp Otto Runges Lehre vom Farbmischen: Farben sind harmonisch, wenn sie in gleichen Anteilen gemischt ein neutrales Grau ergeben — ein vollkommenes Gleichgewicht.',
+  't1a': '<b>So funktioniert es.</b> Wenn Sie zwei oder drei Farben wählen, bildet die App ein Dreieck in der Runge-Kugel und berechnet seinen geometrischen Mittelpunkt relativ zur zentralen grauen Achse — schnell und direkt auf dem Gerät.',
+  't1b': '<b>Bewertung der Harmonie.</b> Fällt der Schwerpunkt auf die graue Achse, sind die Farben ausgewogen. Kippt das Dreieck zu einem kräftigen Farbton, zeigt die App den Verlust der Harmonie: Die Mischung wird schmutzig oder verschoben.',
+  't1c': '<b>Automatische Korrektur.</b> Statt nur zu kritisieren, schlägt die App einen korrigierten Satz vor und verschiebt die Farben über die Kugel (Helligkeit und Sättigung) ins Gleichgewicht. Nützlich für Interieur und Corporate Design, wo Farben einander nicht überdecken sollen.',
+  't2h': '2. Paletten-Export in Grafikprogramme und Code',
+  't2p': 'Die fertige Palette gelangt mit einem Fingertipp in Ihre Arbeitswerkzeuge. Fünf Formate werden unterstützt:',
+  't2a': '<b>.ASE (Adobe Swatch Exchange)</b> — importiert direkt in Photoshop, Illustrator und InDesign über die Swatches-Palette.',
+  't2b': '<b>.GPL (GIMP Palette)</b> — öffnet in GIMP und Krita.',
+  't2c': '<b>.SVG</b> — Vektor-Farbchips; die Datei lässt sich in Figma, Inkscape oder CorelDRAW ziehen, Farben werden direkt im Projekt mit der Pipette kopiert.',
+  't2d': '<b>.CSS und .JSON</b> — fertige Variablen mit HEX-Codes für Websites und mobile Apps.',
+  't2e': '<b>Bild für Messenger.</b> Kein Export nötig? Die Teilen-Taste erzeugt eine Karte mit allen Farben und HEX-Codes — zum Versand an Kunden in Telegram oder WhatsApp.',
+  'sh4': 'Für wen',
+  'who': 'Designer, Künstler, Illustratoren, Dekorateure, Maskenbildner, Floristen, Kunstlehrer und alle, die Farbenlehre studieren. Nützlich bei der Farbwahl für Interieur, Outfit, Weblayout, Logo oder Karten. Die App sammelt keine Daten und braucht kein Internet — alle Berechnungen laufen auf dem Gerät.',
+  'ft1': 'App:', 'ft2': 'Quellcode auf GitHub', 'ft3': 'Datenschutzerklärung'
+},
+fr: {
+  'h1': 'Sphère chromatique de Runge',
+  'lead': 'Choix des couleurs et harmonies chromatiques fondés sur le modèle « Farben-Kugel » de Philipp Otto Runge (1810) — le premier cercle chromatique tridimensionnel de l\u2019histoire. Sphère précise, coupes équatoriale et polaire, pipette photo et outils de l\u2019artiste.',
+  'b1': 'gratuit', 'b2': 'sans publicité', 'b3': 'fonctionne hors ligne', 'b5': '6 langues',
+  'cta1': 'Télécharger sur RuStore', 'cta2': 'Code source sur GitHub',
+  'sh1': 'Aperçu', 'cap1': 'Sphère chromatique interactive', 'cap2': 'Harmonies selon les lois de la sphère', 'cap3': 'Proportions de travail',
+  'sh2': 'Fonctionnalités',
+  'f1': 'Cercle chromatique 3D interactif (sphère) rotatif — un clic suffit pour choisir une couleur',
+  'f2': 'Coupes de la sphère : équatoriale et polaire, comme dans les gravures de 1810',
+  'f3': 'Harmonies : contraste vivant (antipode), triade à 120°, méridien de lumière et d\u2019ombre, degrés vers l\u2019axe gris, couleurs analogues',
+  'f4': 'Modes 1, 2 et 3 couleurs : double contraste, complémentaire scindée, analyse de l\u2019équilibre du triangle avec correction automatique',
+  'f5': 'Pipette photo et palette depuis une photo avec détection du schéma',
+  'f6': 'Proportions de travail pour duo et triade : préréglages 70/30 et 60/30/10, parts par chroma',
+  'f7': 'Outils : mélange des couleurs avec évaluation (ΔE), palette limitée de 3 à 6 couleurs, palette sous la lumière, dégradés de la sphère',
+  'f8': 'Vérification du contraste WCAG pour le texte',
+  'f9': 'Sauvegarde des palettes, export CSS, JSON, ASE, GPL, SVG et partage en image',
+  'f10': 'Interface en russe, anglais, allemand, français, espagnol et chinois',
+  'sh3': 'Plus sur les outils',
+  't1h': '1. Équilibre du triangle et correction automatique',
+  't1p': 'Cette fonction s\u2019appuie sur l\u2019enseignement du mélange des couleurs de Philipp Otto Runge : des couleurs sont harmonieuses si, mélangées à parts égales, elles donnent un gris neutre — un équilibre complet.',
+  't1a': '<b>Comment ça marche.</b> Lorsque vous choisissez deux ou trois couleurs, l\u2019app construit un triangle dans la sphère de Runge et calcule son centre géométrique par rapport à l\u2019axe gris central — rapidement, directement sur l\u2019appareil.',
+  't1b': '<b>Évaluation de l\u2019harmonie.</b> Si le centre de gravité rejoint l\u2019axe gris, les couleurs sont équilibrées. Si le triangle penche vers une teinte vive, l\u2019app signale la rupture d\u2019harmonie : le mélange sera sale ou décalé.',
+  't1c': '<b>Correction automatique.</b> Au lieu de simplement critiquer, l\u2019app propose un jeu corrigé en déplaçant les couleurs sur la sphère (clarté et saturation) vers l\u2019équilibre. Pratique pour l\u2019intérieur et l\u2019identité visuelle, où les couleurs ne doivent pas se couvrir.',
+  't2h': '2. Export des palettes vers les logiciels et le code',
+  't2p': 'La palette finie rejoint vos outils en un geste. Cinq formats sont pris en charge :',
+  't2a': '<b>.ASE (Adobe Swatch Exchange)</b> — import direct dans Photoshop, Illustrator et InDesign via le panneau Échantillons (Swatches).',
+  't2b': '<b>.GPL (GIMP Palette)</b> — s\u2019ouvre dans GIMP et Krita.',
+  't2c': '<b>.SVG</b> — pastilles vectorielles ; glissez le fichier dans Figma, Inkscape ou CorelDRAW et copiez les couleurs à la pipette dans le projet.',
+  't2d': '<b>.CSS et .JSON</b> — variables prêtes avec les codes HEX pour sites web et applications mobiles.',
+  't2e': '<b>Image pour messageries.</b> Pas besoin d\u2019export ? Le bouton Partager génère une carte avec toutes les couleurs et leurs codes HEX — facile à envoyer à un client sur Telegram ou WhatsApp.',
+  'sh4': 'Pour qui',
+  'who': 'Designers, artistes, illustrateurs, décorateurs, maquilleurs, fleuristes, professeurs de dessin et tous ceux qui étudient la théorie des couleurs. Utile pour choisir les couleurs d\u2019un intérieur, d\u2019une tenue, d\u2019une maquette web, d\u2019un logo ou d\u2019une carte. L\u2019app ne collecte aucune donnée et ne requiert pas internet — tous les calculs se font sur l\u2019appareil.',
+  'ft1': 'Application :', 'ft2': 'code source sur GitHub', 'ft3': 'politique de confidentialité'
+},
+zh: {
+  'h1': '龙格色彩球',
+  'lead': '基于菲利普·奥托·龙格「Farben-Kugel」模型（1810年，历史上第一个三维色轮）的取色与配色工具。精确的色彩球、赤道与极面剖面、照片取色与画家工具。',
+  'b1': '免费', 'b2': '无广告', 'b3': '离线运行', 'b5': '6 种语言',
+  'cta1': '在 RuStore 下载', 'cta2': 'GitHub 源代码',
+  'sh1': '界面预览', 'cap1': '可旋转的色彩球', 'cap2': '按球体法则构建的和谐配色', 'cap3': '自定义工作比例',
+  'sh2': '功能',
+  'f1': '可旋转的交互式三维色轮（球体）——点击任意位置取色',
+  'f2': '球体剖面：如 1810 年铜版画所示的赤道剖面与极面剖面',
+  'f3': '色彩和谐：生动对比（对极点）、120° 三色组、光影子午线、向灰轴的饱和度层级、类似色',
+  'f4': '1、2、3 色模式：双重对比、分裂互补色、三角形平衡分析与自动校正',
+  'f5': '照片取色与从照片生成调色板，自动识别配色方案',
+  'f6': '双色与三色的自定义工作比例：70/30、60/30/10 预设，按彩度分配份额',
+  'f7': '工具：混色（带 ΔE 精度评分）、3–6 色限量调色板、光照下的调色板、沿色球的渐变',
+  'f8': 'WCAG 文本对比度检查',
+  'f9': '保存调色板，导出 CSS、JSON、ASE、GPL、SVG，或以图片分享',
+  'f10': '界面支持俄语、英语、德语、法语、西班牙语和中文',
+  'sh3': '工具详解',
+  't1h': '1. 三角形平衡分析与自动校正',
+  't1p': '该功能基于菲利普·奥托·龙格的混色学说：若若干颜色以均等份额混合后得到中性灰，即达到完全平衡，视为和谐。',
+  't1a': '<b>工作原理。</b>选择两种或三种颜色后，应用会在龙格球体内构建三角形，并计算其几何中心相对于中央灰轴的位置——快速、完全在设备本地完成。',
+  't1b': '<b>和谐度评估。</b>若重心落在灰轴上，颜色即平衡；若三角形偏向鲜艳色调，应用会提示和谐被打破：混合后将呈脏色或偏移色。',
+  't1c': '<b>自动校正。</b>应用不只指出问题，还会沿球体调整颜色的明度与饱和度，给出校正后的平衡组合。适用于室内设计与品牌视觉等色彩不应互相冲突的场景。',
+  't2h': '2. 调色板导出至图形软件与代码',
+  't2p': '完成的调色板一键进入工作流程，支持五种格式：',
+  't2a': '<b>.ASE（Adobe Swatch Exchange）</b>——通过「色板」（Swatches）面板直接导入 Photoshop、Illustrator 和 InDesign。',
+  't2b': '<b>.GPL（GIMP Palette）</b>——可在 GIMP 和 Krita 中打开。',
+  't2c': '<b>.SVG</b>——矢量色块；拖入 Figma、Inkscape 或 CorelDRAW，用滴管在项目中直接取色。',
+  't2d': '<b>.CSS 与 .JSON</b>——含 HEX 代码的现成变量，用于网站与移动应用开发。',
+  't2e': '<b>即时通讯图片。</b>无需导出？点「分享」即可生成含全部颜色与 HEX 代码的卡片，方便通过 Telegram 或 WhatsApp 发送给客户。',
+  'sh4': '适用人群',
+  'who': '设计师、画家、插画师、室内装饰师、化妆师、花艺师、绘画教师，以及所有学习色彩理论的人。适用于室内配色、服装搭配、网页排版、标志与贺卡设计。应用不收集数据，无需联网——全部和谐度计算均在设备本地完成。',
+  'ft1': '应用：', 'ft2': 'GitHub 源代码', 'ft3': '隐私政策'
+},
+es: {
+  'h1': 'Esfera cromática de Runge',
+  'lead': 'Elección del color y armonías cromáticas basadas en el modelo «Farben-Kugel» de Philipp Otto Runge (1810) — el primer círculo cromático tridimensional de la historia. Esfera precisa, cortes ecuatorial y polar, cuentagotas de foto y herramientas del artista.',
+  'b1': 'gratis', 'b2': 'sin anuncios', 'b3': 'funciona sin conexión', 'b5': '6 idiomas',
+  'cta1': 'Descargar en RuStore', 'cta2': 'Código fuente en GitHub',
+  'sh1': 'Vista previa', 'cap1': 'Esfera cromática interactiva', 'cap2': 'Armonías según las leyes de la esfera', 'cap3': 'Proporciones de trabajo',
+  'sh2': 'Funciones',
+  'f1': 'Círculo cromático 3D interactivo (esfera) con rotación — un toque en cualquier punto elige el color',
+  'f2': 'Cortes de la esfera: ecuatorial y polar, como en los grabados de 1810',
+  'f3': 'Armonías: contraste vivo (antípoda), tríada de 120°, meridiano de luz y sombra, grados hacia el eje gris, colores análogos',
+  'f4': 'Modos de 1, 2 y 3 colores: doble contraste, complementario escindido, análisis del equilibrio del triángulo con corrección automática',
+  'f5': 'Cuentagotas de foto y paleta desde una fotografía con detección del esquema',
+  'f6': 'Proporciones de trabajo para parejas y tríadas: ajustes 70/30 y 60/30/10, partes por croma',
+  'f7': 'Herramientas: mezcla de colores con puntuación (ΔE), paleta limitada de 3 a 6 colores, paleta bajo la luz, degradados de la esfera',
+  'f8': 'Comprobación de contraste WCAG para texto',
+  'f9': 'Guardar paletas, exportar a CSS, JSON, ASE, GPL, SVG y compartir como imagen',
+  'f10': 'Interfaz en ruso, inglés, alemán, francés, español y chino',
+  'sh3': 'Más sobre las herramientas',
+  't1h': '1. Equilibrio del triángulo y corrección automática',
+  't1p': 'Esta función se basa en la enseñanza de Philipp Otto Runge sobre la mezcla de colores: unos colores son armoniosos si, mezclados en partes iguales, dan un gris neutro — un equilibrio completo.',
+  't1a': '<b>Cómo funciona.</b> Al elegir dos o tres colores, la app construye un triángulo dentro de la esfera de Runge y calcula su centro geométrico respecto al eje gris central — rápido y directamente en el dispositivo.',
+  't1b': '<b>Evaluación de la armonía.</b> Si el centro de gravedad coincide con el eje gris, los colores están equilibrados. Si el triángulo se inclina hacia un tono vivo, la app muestra que la armonía se rompe: la mezcla saldrá sucia o desplazada.',
+  't1c': '<b>Corrección automática.</b> En lugar de limitarse a criticar, la app propone un juego corregido desplazando los colores sobre la esfera (luminosidad y saturación) hasta el equilibrio. Útil para interiores e identidad visual, donde los colores no deben taparse entre sí.',
+  't2h': '2. Exportación de paletas a editores y código',
+  't2p': 'La paleta terminada pasa a tus herramientas con un gesto. Se admiten cinco formatos:',
+  't2a': '<b>.ASE (Adobe Swatch Exchange)</b> — se importa directamente en Photoshop, Illustrator e InDesign desde el panel Muestras (Swatches).',
+  't2b': '<b>.GPL (GIMP Palette)</b> — se abre en GIMP y Krita.',
+  't2c': '<b>.SVG</b> — muestras vectoriales; arrastra el archivo a Figma, Inkscape o CorelDRAW y copia los colores con el cuentagotas directamente en el proyecto.',
+  't2d': '<b>.CSS y .JSON</b> — variables listas con códigos HEX para sitios web y apps móviles.',
+  't2e': '<b>Imagen para mensajerías.</b> ¿Sin exportación? El botón Compartir genera una tarjeta con todos los colores y sus códigos HEX — fácil de enviar a un cliente por Telegram o WhatsApp.',
+  'sh4': 'Para quién',
+  'who': 'Diseñadores, artistas, ilustradores, decoradores, maquilladores, floristas, profesores de dibujo y quienes estudian la teoría del color. Útil para elegir colores de interiores, atuendos, maquetas web, logotipos o tarjetas. La app no recopila datos ni necesita internet — todos los cálculos se hacen en el dispositivo.',
+  'ft1': 'Aplicación:', 'ft2': 'código fuente en GitHub', 'ft3': 'política de privacidad'
+}
+};
+
+function setLang(lang) {
+  const dict = I18N[lang] || I18N.ru;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('#langtabs button').forEach((b) => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+  try { localStorage.setItem('runge-site-lang', lang); } catch (e) {}
+}
+
+document.querySelectorAll('#langtabs button').forEach((b) => {
+  b.addEventListener('click', () => setLang(b.getAttribute('data-lang')));
+});
+
+let saved = null;
+try { saved = localStorage.getItem('runge-site-lang'); } catch (e) {}
+const browser = (navigator.language || 'ru').slice(0, 2).toLowerCase();
+setLang(saved || (I18N[browser] ? browser : 'ru'));
+</script>
 </body>
 </html>
